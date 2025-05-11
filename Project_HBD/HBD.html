@@ -1,0 +1,337 @@
+<!DOCTYPE html> <!-- บอกว่าใช้ HTML5 -->
+<html lang="th"> <!-- เริ่มต้นภาษา HTML โดยตั้งค่าให้ภาษาเป็นไทย -->
+<head>
+  <meta charset="UTF-8"> <!-- กำหนดรูปแบบการเข้ารหัสตัวอักษรเป็น UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ทำให้เว็บไซต์แสดงผลได้ดีในมือถือ -->
+  <title>สุขสันต์วันเกิดนะ 🎉</title> <!-- ชื่อหัวเว็บบนแท็บเบราว์เซอร์ -->
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet"> <!-- ใช้ฟอนต์ Itim จาก Google Fonts -->
+
+  <style>
+    body { /* กำหนดพื้นหลังแบบไล่สี เคลื่อนไหวได้ พร้อมเปลี่ยน cursor */
+      margin: 0;
+      padding: 0;
+      font-family: 'Itim', cursive;
+      color: #333;
+      text-align: center;
+      background: linear-gradient(-45deg, #ffe0ec, #ffb6c1, #fce4ec, #fff);
+      background-size: 400% 400%;
+      animation: bgMove 10s ease infinite;  
+      cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'), auto;  
+      padding-bottom: 120px; /* เพิ่ม padding ด้านล่าง */
+    }
+    @keyframes bgMove { /* สร้างแอนิเมชันให้พื้นหลังขยับแบบลื่นไหล */
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .header { /* หัวข้อใหญ่สุดของเว็บ */
+      font-size: 2rem;
+      margin-top: 40px;
+    }
+    #typewriterText {  /* ข้อความที่พิมพ์ทีละตัวแบบพิมพ์ดีด */
+      font-size: 1.4rem;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+    #cake { /* รูปเค้กที่มีแอนิเมชันกระโดด */
+      width: 180px;
+      margin-top: 30px;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { /* สร้างแอนิเมชันให้เค้กกระโดด */
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #musicBtn { /* ปุ่มสำหรับเปิดเพลง */
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      background-color: #ffb6c1;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      font-family: 'Itim', cursive;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    #musicPopup { /* ป๊อปอัพสำหรับควบคุมเพลง */
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      background: rgba(255, 240, 248, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      width: 230px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      z-index: 999;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+    #songImage {
+      width: 60px;
+      height: 60px;
+      object-fit: cover; /* ครอบตัดภาพให้พอดีกับกรอบ */
+      border-radius: 10px; /* ถ้าต้องการให้ภาพมีมุมโค้ง */
+    }
+
+    @keyframes fadeIn { /* สร้างแอนิเมชันให้ป๊อปอัพเข้ามา */
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .music-control {  /* ปุ่มควบคุมเพลง (เล่น หยุด ข้าม เสียง) */
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .blessing {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      animation: fadeText 5s ease-in-out infinite;
+    }
+
+    @keyframes fadeText {
+      0%, 100% { opacity: 0; } /* เริ่มต้นและจบที่ความโปร่งใส 0 */
+      10%, 90% { opacity: 1; } /* ค่อย ๆ ปรากฏในช่วงกลาง */
+    }
+    .photo-frame {
+      margin-top: 20px;
+      padding: 15px;
+      background: #ffe4ec;
+      border: 4px dashed #ffb6c1;
+      border-radius: 20px;
+      display: inline-block;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      animation: float 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    #sisterPhoto {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    #sisterPhoto:hover {
+      transform: scale(1.05);
+    }
+
+    .photo-caption {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #d6336c;
+      font-weight: bold;
+    }
+
+    /* เอฟเฟกต์ลอยนุ่ม ๆ */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .star { /* จุดสีขาวเล็ก ๆ เป็นเอฟเฟกต์ดาวกระพริบพื้นหลัง */
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 1.5s infinite ease-in-out;
+      opacity: 0.8;
+      z-index: 0;
+    }
+    @keyframes twinkle {  /* สร้างแอนิเมชันให้ดาวกระพริบ */
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">🎂 สุขสันต์วันเกิดนะ 🎂</div> <!-- หัวข้อใหญ่ -->
+<p id="typewriterText"></p> <!-- ที่แสดงข้อความแบบพิมพ์ดีด -->
+
+<div>
+  <img id="cake" src="img/squishy cake.gif" alt="Birthday Cake">
+</div>
+
+<div class="photo-frame">
+  <img id="sisterPhoto" src="img/porfon.jpg" alt="Photo">
+  <p class="photo-caption">วันเกิดของเจ้าตัวจิ๋ว 💖</p>
+  <span style="position: absolute; top: -10px; left: -10px;">🌸</span>
+  <span style="position: absolute; bottom: -10px; right: -10px;">🎀</span>
+</div>
+
+<div class="blessing" id="blessingText"></div> <!-- ข้อความอวยพรที่เปลี่ยนเรื่อย ๆ -->
+<button id="musicBtn" onclick="handleMusicButton()">💕จิ้มเราก่อนสิ💕</button> <!-- ปุ่มเปิดเพลง -->
+<audio id="bgMusic" autoplay loop></audio> <!-- แท็กเสียงสำหรับเล่นเพลง -->
+  
+  <div id="musicPopup"> <!-- แสดงภาพเพลง ชื่อเพลง ปุ่มควบคุมเพลง -->
+    <div style="margin-bottom: 10px;">
+      <img id="songImage" src="img/maxresdefault.jpg" width="60">    
+      <p style="margin: 5px 0;">💖ลองเปลี่ยนเพลงดู💖</p>   
+      <p id="songName" style="margin: 0; font-size: 15px;">ชื่อเพลง</p> 
+    </div>
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+      <button onclick="prevSong()" class="music-control">⏮️</button>
+      <button onclick="togglePlayPause()" class="music-control" id="playPauseBtn">⏸️</button>
+      <button onclick="nextSong()" class="music-control">⏭️</button> 
+    </div>
+    <div style="margin-top: 10px; display: flex; justify-content: space-around;">
+      <button onclick="changeVolume(-0.1)" class="music-control">🔉</button>
+      <button onclick="changeVolume(0.1)" class="music-control">🔊</button>
+    </div>
+    <button onclick="closepopup()" style="margin-top: 10px; background-color: #ffc0cb; border: none; border-radius: 12px; padding: 6px 14px; cursor: pointer; font-size: 1rem;">ย่อ</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script> <!-- ไลบรารีสำหรับสร้างเอฟเฟกต์คอนเฟตตี -->
+  
+
+  <script>
+    const music = document.getElementById("bgMusic"); // แท็กเสียงสำหรับเพลง
+    const musicPopup = document.getElementById("musicPopup");   // ป๊อปอัพเพลง
+    const musicBtn = document.getElementById("musicBtn"); // ปุ่มเปิดเพลง
+    const songImage = document.getElementById("songImage"); // รูปภาพเพลง
+    const songName = document.getElementById("songName"); // ชื่อเพลง
+    const playPauseBtn = document.getElementById("playPauseBtn"); // ปุ่มเล่น/หยุดเพลง
+    const playlist = [
+      { src: "sound/SSS.mp3", img: "img/maxresdefault.jpg", name: "ข้างกาย" },
+      { src: "sound/Please be true.mp3", img: "img/images.jpg", name: "Please be true" },
+      { src: "sound/Over & Over.mp3", img: "img/man.jpg", name: "Over & Over" },
+      { src: "sound/pick up the phone.mp3", img: "img/pick up the phone.jpg", name: "pick up the phone" },
+    ];
+    let currentSongIndex = 0; 
+    let musicStarted = false; 
+  
+    function playSong(index) {  // ฟังก์ชันเล่นเพลง
+      currentSongIndex = index % playlist.length; 
+      music.src = playlist[currentSongIndex].src; 
+      songImage.src = playlist[currentSongIndex].img; 
+      songName.textContent = playlist[currentSongIndex].name; 
+      music.play();
+    }
+  
+    function handleMusicButton() {  // ฟังก์ชันจัดการเมื่อคลิกปุ่มเพลง
+      if (!musicStarted) {
+        playSong(currentSongIndex); // เริ่มเล่นเพลง
+        musicStarted = true;  // ตั้งค่าให้เพลงเริ่มเล่นแล้ว
+        musicBtn.textContent = "🎵ลองเปลี่ยนเพลงดู🎵";  
+        confetti(); 
+      } else {  
+        musicPopup.style.display = "block"; 
+        confetti();
+      }
+    }
+  
+    function closepopup() { // ฟังก์ชันปิดป๊อปอัพเพลง
+      musicPopup.style.display = "none";
+    }
+  
+    function changeVolume(amount) { // ฟังก์ชันเปลี่ยนระดับเสียง
+      let newVolume = music.volume + amount;
+      music.volume = Math.max(0, Math.min(1, newVolume));
+    }
+  
+    function nextSong() { // ฟังก์ชันเล่นเพลงถัดไป
+      playSong((currentSongIndex + 1) % playlist.length); 
+    }
+  
+    function prevSong() { // ฟังก์ชันเล่นเพลงก่อนหน้า
+      playSong((currentSongIndex - 1 + playlist.length) % playlist.length);
+    }
+  
+    music.addEventListener("ended", nextSong);  // เมื่อเพลงจบให้เล่นเพลงถัดไป
+  
+    function togglePlayPause() {  // ฟังก์ชันเล่น/หยุดเพลง
+      if (music.paused) {
+        music.play();
+        playPauseBtn.textContent = "⏸️";
+      } else {
+        music.pause();
+        playPauseBtn.textContent = "▶️";
+      }
+    }
+  
+    const message = " ขอให้ทุกๆวันของเต็มไปด้วยความสุข และขอให้ได้เจอแต่สิ่งดีๆ ตลอดไป "; 
+    let index = 0;  
+  
+    function typeWriter() { // ฟังก์ชันพิมพ์ข้อความแบบพิมพ์ดีด
+      const typewriterEl = document.getElementById("typewriterText"); 
+      if (index < message.length) { 
+        typewriterEl.textContent += message.charAt(index);  // เพิ่มตัวอักษรทีละตัว
+        index++;  // เพิ่มค่า index เพื่อไปยังตัวอักษถัดไป
+        setTimeout(typeWriter, 100);  // เรียกฟังก์ชันนี้อีกครั้งหลังจาก 100 มิลลิวินาที
+      }
+    }
+  
+    const blessings = [ // ข้อความอวยพรที่เปลี่ยนไปเรื่อย ๆ
+      "สุขสันต์วันเกิดนะ 💖",
+      "ขอให้สมหวังในทุกสิ่ง 🎁",
+      "รักตัวเองให้มาก ๆ ล่ะ 🌼",
+      "ไม่ว่าจะทำอะไรก็ขอให้สำเร็จตามตั้งใจ 💪",
+      "ขอให้สุขภาพแข็งแรงทั้งกายและใจ 🍀",
+      "เธอเก่งกว่าที่คิด อย่าลืมเชื่อในตัวเอง 🌟",
+      "พี่จะเป็นคนคอยให้กำลังใจเสมอนะ จู้ๆ 💕",
+    ];  
+    let blessIndex = 0; 
+    setInterval(() => { // ฟังก์ชันเปลี่ยนข้อความอวยพร
+      document.getElementById("blessingText").textContent = blessings[blessIndex];  
+      blessIndex = (blessIndex + 1) % blessings.length; // เปลี่ยนข้อความอวยพรทุก ๆ 5 วินาที
+    }, 5000);
+  
+    let debounceTimeout;
+    document.addEventListener("mousemove", function(e) {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(function() {
+        const heart = document.createElement("div");
+        heart.textContent = "❤️";
+        heart.style.position = "absolute";
+        heart.style.left = e.pageX + "px";
+        heart.style.top = e.pageY + "px";
+        heart.style.fontSize = "1.2rem";
+        heart.style.opacity = 0.8;
+        heart.style.animation = "fadeOut 1s forwards";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+      }, 100);  // หน่วงเวลาให้แสดงแค่ครั้งเดียวทุก 100 มิลลิวินาที
+    });
+
+    function createStars(num) {
+      // สร้างดาวจำนวนจำกัดเท่านั้น
+      for (let i = 0; i < Math.min(num, 50); i++) {  // จำกัดจำนวนดาว
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.top = Math.random() * window.innerHeight + "px";
+        star.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(star);
+      }
+    }
+
+    window.onload = () => { // ฟังก์ชันที่ทำงานเมื่อโหลดหน้าเว็บเสร็จ
+      document.getElementById("typewriterText").textContent = ""; // ป้องกันซ้ำ
+      typeWriter(); // เริ่มพิมพ์ข้อความ
+      setTimeout(() => {  // เริ่มเล่นเพลงหลังจากโหลดหน้าเว็บเสร็จ
+        confetti();   
+      }, 1000);
+      createStars(100); // เพิ่มดาว 100 ดวง
+    };
+
+    function animateStars() {
+      createStars(100);
+      requestAnimationFrame(animateStars);  // เรียกใช้งานฟังก์ชันนี้ซ้ำ
+    }
+
+
+  </script>
+  <footer style="position: fixed; bottom: 5px; width: 100%; text-align: center; font-size: 0.8rem; color: rgba(0, 0, 0, 0.3); font-family: 'Itim', cursive;">
+    สร้างโดย P'Keng สุดจ๊าบ 💕
+  </footer>
+</body>
+</html>
